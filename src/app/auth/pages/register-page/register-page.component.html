@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col">
 
-        <form autocomplete="off">
+        <form [formGroup]="registerForm" autocomplete="off">
 
             <!-- Nombre -->
             <div class="row mb-3">
@@ -12,13 +12,14 @@
                 <div class="col-sm-9">
                     <input type="text"
                            class="form-control"
-                           placeholder="Nombre del usuario">
-
-                    <span class="form-text text-danger">
+                           placeholder="Nombre del usuario"
+                           formControlName="nombre">
+                    <span *ngIf="isValidField('nombre')" class="form-text text-danger">
                         Debe de ser en formato de nombre y apellido
                     </span>
                 </div>
             </div>
+
 
             <!-- Email -->
             <div class="row mb-3">
@@ -26,8 +27,9 @@
                 <div class="col-sm-9">
                     <input type="email"
                            class="form-control"
-                           placeholder="Email del usuario">
-                    <span class="form-text text-danger">
+                           placeholder="Email del usuario"
+                           formControlName="correo">
+                    <span *ngIf="isValidField('correo')" class="form-text text-danger">
                         mensaje de error del email
                     </span>
                 </div>
@@ -39,8 +41,9 @@
                 <div class="col-sm-9">
                     <input type="text"
                            class="form-control"
-                           placeholder="Nombre código del usuario">
-                    <span class="form-text text-danger">
+                           placeholder="Nombre código del usuario"
+                           formControlName="usuario">
+                    <span *ngIf="isValidField('usuario')" class="form-text text-danger">
                          El username no puede ser Strider
                     </span>
                 </div>
@@ -52,9 +55,9 @@
                 <div class="col-sm-9">
                     <input type="password"
                            class="form-control"
-                           placeholder="Password de su cuenta">
-
-                    <span class="form-text text-danger">
+                           placeholder="Password de su cuenta"
+                           formControlName="contrasena">
+                    <span *ngIf="isValidField('contrasena')"  class="form-text text-danger">
                          La contraseña debe de ser mayor de 6 caracteres.
                     </span>
                 </div>
@@ -66,9 +69,9 @@
                 <div class="col-sm-9">
                     <input type="password"
                            class="form-control"
-                           placeholder="Confirmar la contraseña">
-
-                    <span class="form-text text-danger">
+                           placeholder="Confirmar la contraseña"
+                           formControlName="contrasena2">
+                    <span *ngIf="isValidField('contrasena2')" class="form-text text-danger">
                          Las contraseñas deben de ser iguales
                     </span>
                 </div>
@@ -90,24 +93,24 @@
 </div>
 
 
-<h2>Form Valid: </h2>
-<h2>Form Status: </h2>
-<h2>Form Pending: </h2>
+<h2>Form Valid: {{registerForm.valid}} </h2>
+<h2>Form Status: {{registerForm.status}} </h2>
+<h2>Form Pending: {{registerForm.pending}} </h2>
 <h2>Form errors</h2>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.errors | json }}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['nombre'].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['correo'].errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.controls['usuario'].errors | json }}</pre>
 
 
 <h5>Password</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.value.contrasena | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ 'formulario' | json }}</pre>
+<pre>{{ registerForm.value.contrasena2 | json }}</pre>

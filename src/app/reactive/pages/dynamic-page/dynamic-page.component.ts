@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ValidatorService } from '../../../shared/service/validators.service';
 
 
 @Component({
@@ -14,7 +15,11 @@ export class DynamicPageComponent {
 
     public newFavorite: FormControl = new FormControl('', Validators.required);
 
-    constructor( private formBuilder: FormBuilder ){
+    constructor(
+      private formBuilder: FormBuilder,
+      private validatorService: ValidatorService
+
+     ){
       this.dynamicForm = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(3)]],
         favoriteGames: this.formBuilder.array([
@@ -29,8 +34,7 @@ export class DynamicPageComponent {
     }
 
     isValidField(field: string){
-      return this.dynamicForm.controls[field].errors
-      && this.dynamicForm.controls[field].touched;
+      return this.validatorService.isValidField(this.dynamicForm, field);
     }
 
     isValidFieldInArray(formArray: FormArray, i: number){

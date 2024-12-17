@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { retry } from 'rxjs';
+import { ValidatorService } from '../../../shared/service/validators.service';
 
 @Component({
   standalone: false,
@@ -11,7 +11,11 @@ export class BasicPageComponent {
 
   public mainForm: FormGroup;
 
-  constructor( private formbuilder: FormBuilder ){
+  constructor(
+    private formbuilder: FormBuilder,
+    private validatorService: ValidatorService
+
+   ){
     this.mainForm =  this.formbuilder.group({
       name:['',[Validators.required, Validators.minLength(3)]],
       price:[0, [Validators.required, Validators.min(0)]],
@@ -19,10 +23,6 @@ export class BasicPageComponent {
     })
   }
 
-  isValidField(field: string){
-    return this.mainForm.controls[field].errors
-    && this.mainForm.controls[field].touched;
-  }
 
   getFieldError(field: string): string | null {
     if(!this.mainForm.controls[field]) return null;
@@ -51,6 +51,10 @@ export class BasicPageComponent {
     console.log(this.mainForm.value);
 
     this.mainForm.reset({price :0, inStorage:0 });
+  }
+
+  isValidField(field: string){
+    return this.validatorService.isValidField(this.mainForm, field);
   }
 
 }

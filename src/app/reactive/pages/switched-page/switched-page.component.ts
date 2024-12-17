@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorService } from '../../../shared/service/validators.service';
 
 @Component({
   standalone: false,
@@ -10,7 +11,9 @@ export class SwitchedPageComponent {
 
     public switchForm: FormGroup;
 
-    constructor ( private formBuilder: FormBuilder ) {
+    constructor ( private formBuilder: FormBuilder,
+      private validatorService: ValidatorService
+     ) {
 
       this.switchForm = this.formBuilder.group({
         gender: ['M', Validators.required],
@@ -38,8 +41,7 @@ export class SwitchedPageComponent {
     }
 
     isValidField(field: string){
-      return this.switchForm.controls[field].errors
-      && this.switchForm.controls[field].touched;
+      return this.validatorService.isValidField(this.switchForm, field);
     }
 
     onSubmit(): void{
